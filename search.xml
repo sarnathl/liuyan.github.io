@@ -2,18 +2,10 @@
 <search>
   <entry>
     <title><![CDATA[百度地图debug release Key申请]]></title>
-    <url>%2F2018%2F09%2F11%2Fhello-world.1%2F</url>
+    <url>%2F2018%2F09%2F11%2Fandroid-baidusdk%2F</url>
     <content type="text"><![CDATA[百度SDK 申请1http://lbsyun.baidu.com/apiconsole/key/create 二.发布版 SHA1 debug 版本申请 打开终端输入cd .android keytool -list -v -keystore debug.keystore 密钥口令android SHA1 就是我们的开发板 也就是debug版本 三.开发版本 SHA1 release 版本申请 首先我们的应用是打包签名后的 ，用我们的jks再来一遍就生成了发布版的SHA1 打开终端输入cd .android keytool -list -v -keystore /你自己的releaseKey路径即可 生成了不一样的SHA1 SHA1 就是我们的发布版的SHA1 也就是release版本]]></content>
       <categories>
         <category>Android</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[定时器 你真的会使用吗？]]></title>
-    <url>%2F2016%2F12%2F13%2Fhello-world.2%2F</url>
-    <content type="text"><![CDATA[123public static void main(String args)&#123; &#125;]]></content>
-      <categories>
-        <category>Web</category>
       </categories>
   </entry>
   <entry>
@@ -37,5 +29,13 @@
       <tags>
         <tag>categories</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[定时器 你真的会使用吗？]]></title>
+    <url>%2F2016%2F12%2F13%2Fhello-world.2%2F</url>
+    <content type="text"><![CDATA[123public static void main(String args)&#123; &#125;]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
   </entry>
 </search>
