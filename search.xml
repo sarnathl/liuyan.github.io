@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[百度地图debug release Key申请]]></title>
-    <url>%2F2018%2F09%2F11%2Fandroid-baidusdk%2F</url>
-    <content type="text"><![CDATA[百度SDK 申请1http://lbsyun.baidu.com/apiconsole/key/create 二.发布版 SHA1 debug 版本申请 打开终端输入cd .android keytool -list -v -keystore debug.keystore 密钥口令android SHA1 就是我们的开发板 也就是debug版本 三.开发版本 SHA1 release 版本申请 首先我们的应用是打包签名后的 ，用我们的jks再来一遍就生成了发布版的SHA1 打开终端输入cd .android keytool -list -v -keystore /你自己的releaseKey路径即可 生成了不一样的SHA1 SHA1 就是我们的发布版的SHA1 也就是release版本]]></content>
+    <title><![CDATA[推送显示未读数量]]></title>
+    <url>%2F2018%2F09%2F12%2Fandroid-push-badge%2F</url>
+    <content type="text"><![CDATA[在实际开发中会有这样还一个需求，显示推送过来的未读消息数量推送实时更新未读消息数量，接收到【一条消息】，就【显示未读数量】，当用户点击，或者拖拽的时候消除掉未读消息数量，先上一下效果图，当我推送两条消息过来的时候显示的样子 用到的技术 EventBus 响应式框架：以及显示消息的QBadgeView负责来显示目的：1.把接收到的消息从Receiver发送到主Activity，在主Activity中接收这个数量2.把接收到的数量用QBadgeView来显示 https://github.com/qstumn/BadgeView 第一步：先引入我们的QBadgeView 库和EventBus库在我们的app-&gt;build.gradle中添加compile ‘q.rorbin:badgeview:1.1.3’compile ‘org.greenrobot:eventbus:3.0.0’ 第二步在我们接收自定义消息的地方添加 123456789101112131415161718192021222324252627282930313233343536public class MyReceiver extends BroadcastReceiver &#123; private static final String TAG = "JPush"; @Override public void onReceive(Context context, Intent intent) &#123; //当接受到消息, 弹出通知栏 Bundle bundle = intent.getExtras(); // 消息内容 String content = bundle.getString(JPushInterface.EXTRA_ALERT); if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) &#123; processCustomMessage(context, bundle); &#125; &#125;&#125; // 这里当我们APP端接收到推送过来的消息，我们就递增，并存起来 private void processCustomMessage(Context context, Bundle bundle) &#123; sendNotification(context,bundle); String msgText = bundle.getString(JPushInterface.EXTRA_MESSAGE); // 初始化一个存取未读消息的，默认存储是0 int pushcount = SharePreferenceUtils.getInt(context,"pushcount",0); pushcount++; // 当收到消息的时候在存 SharePreferenceUtils.setInt(context,"pushcount",pushcount); getMsgCount(context); &#125; // 拿到我们存的消息 private int getSendMessage(Context context) &#123; return SharePreferenceUtils.getInt(context,"pushcount",0); &#125; // 发送我们的消息给MainActivity private void getMsgCount(Context context) &#123; int msg = getSendMessage(context); MessageEventBean messageEvent = new MessageEventBean(msg); EventBus.getDefault().post(messageEvent); &#125; 接下来看看我们的MainActivity 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768public class MainActivity extends AppCompatActivity&#123; @InjectView(R.id.swicth_draggable) Switch swicth_draggable; private int msgCount; // 接收消息数量 private QBadgeView badgeView; @Override public void onCreate(Bundle savedInstanceState) &#123; super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); ButterKnife.inject(this); init(); &#125; // 初始化 注意看我的顺序，badges 要放在后面 private void init() &#123; EventBus.getDefault().register(this); CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() &#123; @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) &#123; for (Badge badge : badges) &#123; badge.setOnDragStateChangedListener(isChecked ? new Badge.OnDragStateChangedListener() &#123; @Override public void onDragStateChanged(int dragState, Badge badge, View targetView) &#123; SharePreferenceUtils.remove(MainActivity.this,"pushcount"); &#125; &#125; : null); &#125; &#125; &#125;; swicth_draggable.setOnCheckedChangeListener(onCheckedChangeListener); badges = new ArrayList&lt;&gt;(); badgeView = new QBadgeView(this); // 拿到我们存的数据 msgCount = SharePreferenceUtils.getInt(MainActivity.this,"pushcount",0); // 这里我们把显示未读数量提取出来放到一个方法里,这里是我们用户一进来主页面显示的未读消息数量 getBrageCountMsg(msgCount); &#125; // 未读数量 private void getBrageCountMsg(int msgCount) &#123; badgeView.setBadgeNumber(msgCount); badgeView.bindTarget(mTabtab4); badges.add(badgeView); swicth_draggable.setChecked(true); &#125; @Subscribe(threadMode = ThreadMode.MAIN) public void onMsgEvent(MessageEventBean messageEventBean)&#123; msgCount = messageEventBean.getMessage(); SharePreferenceUtils.setInt(MainActivity.this,"pushcount",msgCount); // 这里是我们推送数据过来实时显示的未读消息数量 getBrageCountMsg(msgCount); &#125; // 在我点击了位置服务的时候删除未读消息[在你想删除的地方调用该方法即可] private void removeBadge() &#123; for (Badge badge : badges) &#123; SharePreferenceUtils.remove(MainActivity.this,"pushcount"); badge.hide(true); &#125; &#125; // 别忘了解除绑定 @Override protected void onDestroy() &#123; super.onDestroy(); EventBus.getDefault().unregister(this); &#125;&#125;]]></content>
       <categories>
         <category>Android</category>
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[定时器 你真的会使用吗？]]></title>
-    <url>%2F2016%2F12%2F13%2Fhello-world.2%2F</url>
-    <content type="text"><![CDATA[123public static void main(String args)&#123; &#125;]]></content>
+    <title><![CDATA[百度地图debug release Key申请]]></title>
+    <url>%2F2018%2F09%2F11%2Fandroid-baidusdk%2F</url>
+    <content type="text"><![CDATA[百度SDK 申请1http://lbsyun.baidu.com/apiconsole/key/create 二.发布版 SHA1 debug 版本申请 打开终端输入cd .android keytool -list -v -keystore debug.keystore 密钥口令android SHA1 就是我们的开发板 也就是debug版本 三.开发版本 SHA1 release 版本申请 首先我们的应用是打包签名后的 ，用我们的jks再来一遍就生成了发布版的SHA1 打开终端输入cd .android keytool -list -v -keystore /你自己的releaseKey路径即可 生成了不一样的SHA1 SHA1 就是我们的发布版的SHA1 也就是release版本]]></content>
       <categories>
-        <category>Web</category>
+        <category>Android</category>
       </categories>
   </entry>
   <entry>
@@ -26,6 +26,14 @@
       <tags>
         <tag>Java</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[定时器 你真的会使用吗？]]></title>
+    <url>%2F2016%2F12%2F13%2Fhello-world.2%2F</url>
+    <content type="text"><![CDATA[123public static void main(String args)&#123; &#125;]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[定时器 你真的会使用吗？]]></title>
