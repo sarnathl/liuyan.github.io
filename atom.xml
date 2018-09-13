@@ -7,6 +7,9 @@
       <categories>
         <category>Android</category>
       </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[百度地图debug release Key申请]]></title>
@@ -15,6 +18,9 @@
       <categories>
         <category>Android</category>
       </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[定时器 你真的会使用吗？]]></title>
@@ -33,17 +39,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[定时器 你真的会使用吗？]]></title>
-    <url>%2F2016%2F12%2F13%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[123public static void main(String args)&#123; &#125;]]></content>
-      <categories>
-        <category>Web/Js</category>
-      </categories>
-      <tags>
-        <tag>categories</tag>
       </tags>
   </entry>
 </search>
