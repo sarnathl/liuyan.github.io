@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
+    <title><![CDATA[定时器]]></title>
     <url>%2F2018%2F10%2F07%2Fcss-hemoxing01%2F</url>
-    <content type="text"><![CDATA[layout: posttitle: 定时器subtitle: 定时器date: 2018-10-07author: Keepheader-img: images/head.pngcatalog: truecategories: JStags : “JS” 哎哎哎]]></content>
+    <content type="text"><![CDATA[哎哎哎]]></content>
+      <categories>
+        <category>JS</category>
+      </categories>
+      <tags>
+        <tag>JS</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[css盒模型]]></title>
